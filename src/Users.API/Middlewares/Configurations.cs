@@ -108,8 +108,6 @@ namespace Users.API.Middlewares
             var jwt = jwtDataSection.Get<JsonWebTokenData>();
             var key = Encoding.ASCII.GetBytes(jwtDataSection.Key);
 
-
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -125,6 +123,7 @@ namespace Users.API.Middlewares
                 };
             });
 
+            builder.Services.AddAuthorization();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Users.API.Middlewares
 {
