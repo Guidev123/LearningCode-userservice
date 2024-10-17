@@ -22,7 +22,7 @@ namespace Users.Application.Command.LoginUser
             if (user is null)
                 return new Response<string?>(null, 404, "Erro");
 
-            string jwt = _authenticationService.GenerateJwtToken(request.Email, user.UserType.ToString());
+            string jwt = _authenticationService.GenerateJwtToken(user);
 
             return new Response<string?>(jwt, 200, "Sucesso");
         }

@@ -1,16 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Users.Application.Authentication;
+using Users.Domain.Entities;
 
 namespace Users.Infrastructure.Authentication
 {
-    public class AuthenticationService(IConfiguration configuration) : IAuthenticationService
+    public class AuthenticationService(IOptions<JsonWebTokenData> jwt) : IAuthenticationService
     {
-        private readonly IConfiguration _configuration = configuration;
+        private readonly JsonWebTokenData _jwt = jwt.Value;
 
         public string ComputeSha256Hash(string password)
         {
@@ -23,22 +25,24 @@ namespace Users.Infrastructure.Authentication
             return builder.ToString();
         }
 
-        public string GenerateJwtToken(string email, string role)
+        public string GenerateJwtToken(User user)
         {
-            var issuer = _configuration["Jwt:Issuer"] ?? string.Empty;
-            var audience = _configuration["Jwt:Audience"] ?? string.Empty;
-            var key = _configuration["Jwt:Key"] ?? string.Empty;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var issuer = _jwt.Issuer;
+            var audience = _jwt.Audience;
+            var key = _jwt.Key;
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
             {
-                new("userName", email),
-                new(ClaimTypes.Role, role),
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.Email.Address),
+                new(ClaimTypes.Email, user.Email.Address),
+                new(ClaimTypes.Role, user.UserType.ToString()),
             };
 
             var token = new JwtSecurityToken(issuer, audience, claims, null, DateTime.Now.AddDays(15), credentials);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
 
             return tokenHandler.WriteToken(token);
         }

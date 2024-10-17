@@ -53,7 +53,7 @@ namespace Users.API.Controllers
         {
             var result = await _mediator.Send(command);
 
-            if (await _uow.Commit() && result.IsSuccess)
+            if (result.IsSuccess)
                 return TypedResults.Ok(result);
 
             return TypedResults.BadRequest(result);

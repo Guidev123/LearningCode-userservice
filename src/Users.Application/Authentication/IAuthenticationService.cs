@@ -1,8 +1,10 @@
-﻿namespace Users.Application.Authentication
+﻿using Users.Domain.Entities;
+
+namespace Users.Application.Authentication
 {
     public interface IAuthenticationService
     {
-        string GenerateJwtToken(string email, string role);
+        string GenerateJwtToken(User user);
         string ComputeSha256Hash(string password);
     }
 }

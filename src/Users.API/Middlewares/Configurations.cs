@@ -102,6 +102,14 @@ namespace Users.API.Middlewares
 
         public static void SecurityMiddleware(this WebApplicationBuilder builder)
         {
+            var jwtDataSection = builder.Configuration.GetSection("Jwt");
+            builder.Services.Configure<JsonWebTokenData>(jwtDataSection);
+
+            var jwt = jwtDataSection.Get<JsonWebTokenData>();
+            var key = Encoding.ASCII.GetBytes(jwtDataSection.Key);
+
+
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -110,12 +118,13 @@ namespace Users.API.Middlewares
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    ValidIssuer = jwt?.Issuer,
+                    ValidAudience = jwt?.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty))
+                    (Encoding.UTF8.GetBytes(jwt?.Key ?? string.Empty))
                 };
             });
+
         }
     }
 }
