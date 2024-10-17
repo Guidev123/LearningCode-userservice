@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Users.Application.Responses;
+using Users.Application.Responses.Messages;
 using Users.Domain.Entities;
 using Users.Domain.Repositories;
 
@@ -12,12 +13,12 @@ namespace Users.Application.Command.DeleteUser
         {
             var user = await _userRepository.GetUserByIdAsync(request.Id);
             if (user is null)
-                return new Response<User?>(null, 404, "Erro");
+                return new Response<User?>(null, 404, ResponseMessages.USER_NOT_FOUND.GetDescription());
 
             user.SetEntityAsDeleted();
             _userRepository.UpdateUser(user);
 
-            return new Response<User?>(null, 204, "Sucesso"); 
+            return new Response<User?>(null, 204, ResponseMessages.USER_DELETED_SUCCESS.GetDescription()); 
         }
     }
 }

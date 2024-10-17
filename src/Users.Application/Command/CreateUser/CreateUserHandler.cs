@@ -2,6 +2,7 @@
 using Users.Application.Authentication;
 using Users.Application.DTOs;
 using Users.Application.Responses;
+using Users.Application.Responses.Messages;
 using Users.Domain.Entities;
 using Users.Domain.Entities.Validations;
 using Users.Domain.Repositories;
@@ -20,7 +21,7 @@ namespace Users.Application.Command.CreateUser
             var validationResult = new UserValidation().Validate(user);
 
             if (!validationResult.IsValid)
-                return new Response<GetUserDTO?>(null, 400, "Error: Something is wrong");
+                return new Response<GetUserDTO?>(null, 400, ResponseMessages.USER_CREATION_FAILED.GetDescription());
 
             if (await _userRepository.UserAlreadyExists(user))
                 return new Response<GetUserDTO?>(null, 400, "Error: User already exists");
@@ -30,7 +31,7 @@ namespace Users.Application.Command.CreateUser
 
             var result = GetUserDTO.MapFromEntity(user);
 
-            return new Response<GetUserDTO?>(result, 201);
+            return new Response<GetUserDTO?>(result, 201, ResponseMessages.USER_CREATED_SUCCESS.GetDescription());
         }
     }
 }

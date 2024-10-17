@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Users.Application.DTOs;
 using Users.Application.Responses;
-using Users.Domain.Entities;
+using Users.Application.Responses.Messages;
 using Users.Domain.Repositories;
 
 namespace Users.Application.Queries.GetUserById
@@ -13,11 +13,11 @@ namespace Users.Application.Queries.GetUserById
         {
             var user = await _userRepository.GetUserByIdAsync(request.Id);
             if(user is null)
-                return new Response<GetUserDTO?>(null, 404, "Error: User not found");
+                return new Response<GetUserDTO?>(null, 404, ResponseMessages.USER_NOT_FOUND.GetDescription());
 
             var result = GetUserDTO.MapFromEntity(user);
 
-            return new Response<GetUserDTO?>(result, 200);
+            return new Response<GetUserDTO?>(result, 200, ResponseMessages.USER_RETRIEVED_SUCCESS.GetDescription());
         }
     }
 }

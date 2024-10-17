@@ -60,7 +60,7 @@ namespace Users.API.Controllers
         }
 
         [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response<User>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response<User>))]
         [HttpDelete("{id:guid}")]
         public async Task<IResult> DeleteAsync(Guid id)
@@ -68,9 +68,9 @@ namespace Users.API.Controllers
             var result = await _mediator.Send(new DeleteUserCommand(id));
 
             if (await _uow.Commit() && result.IsSuccess)
-                return TypedResults.NoContent();
+                return TypedResults.Ok(result.Message);
 
-            return TypedResults.BadRequest(result);
+            return TypedResults.BadRequest(result.Message);
         }
     }
 }

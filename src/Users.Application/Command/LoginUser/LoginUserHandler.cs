@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Users.Application.Authentication;
 using Users.Application.Responses;
+using Users.Application.Responses.Messages;
 using Users.Domain.Entities;
 using Users.Domain.Repositories;
 
@@ -20,11 +21,11 @@ namespace Users.Application.Command.LoginUser
             var passwordHash = _authenticationService.ComputeSha256Hash(request.Password);
             var user = await _userRepository.GetUserByEmailAndPasswordAsync(request.Email, passwordHash);
             if (user is null)
-                return new Response<string?>(null, 404, "Erro");
+                return new Response<string?>(null, 404, ResponseMessages.USER_NOT_FOUND.GetDescription());
 
             string jwt = _authenticationService.GenerateJwtToken(user);
 
-            return new Response<string?>(jwt, 200, "Sucesso");
+            return new Response<string?>(jwt, 200, ResponseMessages.LOGIN_SUCCESS.GetDescription());
         }
     }
 }
