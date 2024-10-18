@@ -1,10 +1,12 @@
  <h1>API - Microsserviço Learning Code</h1>
         <p>Este projeto é uma API que faz parte do microsserviço <strong>Learning Code</strong>. Ela é responsável pelas seguintes operações relacionadas aos usuários da aplicação:</p>
-        <ul>
+  <ul>
             <li>Login</li>
             <li>Criação de usuários</li>
-            <li>Exclusão lógica de usuários</li>
-        </ul>
+           <li>Exclusão lógica de usuários</li>
+       </ul>
+
+        
 
   <h2>Autenticação</h2>
         <p>Para acessar os endpoints, são necessárias duas autenticações que devem ser incluídas no cabeçalho (Header) das requisições:</p>
@@ -47,3 +49,12 @@
 
   <h2>Observações</h2>
   <p>Certifique-se de sempre enviar o <strong>AcessSecretKey</strong> e o <strong>Token</strong> corretos, caso contrário, o acesso aos endpoints será negado.</p>
+
+
+  <h1>Arquitetura e Fluxograma</h1>
+
+          
+  ![AYc3o9il0nNSAAAAAElFTkSuQmCC](https://github.com/user-attachments/assets/de2bff55-b337-4dab-9f2d-9effa6281351)
+  
+  
+   ![Fluxograma Pedido Online Amarelo Marrom](https://github.com/user-attachments/assets/6a537f55-6c90-4617-b8d6-ee41df37d44f)
