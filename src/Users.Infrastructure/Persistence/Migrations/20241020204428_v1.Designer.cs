@@ -12,8 +12,8 @@ using Users.Infrastructure.Persistence;
 namespace Users.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20241016224048_Initial")]
-    partial class Initial
+    [Migration("20241020204428_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,9 @@ namespace Users.Infrastructure.Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()

@@ -13,15 +13,14 @@ namespace Users.API.Endpoints.UserEndpoints
             app.MapPost("/register", HandleAsync).Produces<Response<User?>>();
 
         public static async Task<IResult> HandleAsync(IMediator mediator,
-                                                      IUnitOfWork unitOfWork,
+                                                      IUnitOfWork uow,
                                                       CreateUserCommand command)
         {
             var result = await mediator.Send(command);
 
-            if (await unitOfWork.Commit() && result.IsSuccess)
-                return TypedResults.Created($"api/users/{result.Data?.Id}", result);
-
-            return TypedResults.BadRequest(result);
+            return result.IsSuccess && await uow.Commit()
+                ? TypedResults.Created($"api/users/{result.Data?.Id}", result)
+                : TypedResults.BadRequest(result);
 
         }
     }

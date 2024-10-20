@@ -24,6 +24,7 @@ namespace Users.Application.Command.LoginUser
                 return new Response<string?>(null, 404, ResponseMessages.USER_NOT_FOUND.GetDescription());
 
             string jwt = _authenticationService.GenerateJwtToken(user);
+            user.UpdateLastLoginDate();
 
             return new Response<string?>(jwt, 200, ResponseMessages.LOGIN_SUCCESS.GetDescription());
         }

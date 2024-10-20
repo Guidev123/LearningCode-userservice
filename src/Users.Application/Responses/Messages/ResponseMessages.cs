@@ -12,6 +12,8 @@ namespace Users.Application.Responses.Messages
     {
         [Description("Success: User has been created successfully.")]
         USER_CREATED_SUCCESS,
+        [Description("Error: The document credentials is invalid.")]
+        INVALID_DOCUMENT,
         [Description("Error: Unable to create user.")]
         USER_CREATION_FAILED,
         [Description("Error: User already exists.")]

@@ -19,8 +19,9 @@ namespace Users.Domain.Entities
             Password = password;
             Document = document;
             Phone = phone;
-            UserType = ECustomerType.Customer;
             BirthDate = birthDate;
+            UserType = ECustomerType.Customer;
+            LastLogin = DateTime.Now;
             IsDeleted = false;
         }
         protected User() { } // EF Relation
@@ -33,8 +34,9 @@ namespace Users.Domain.Entities
         public Document Document { get; private set; } = null!;
         public ECustomerType UserType { get; private set; }
         public DateTime BirthDate { get; private set; }
+        public DateTime LastLogin {  get; private set; }    
         public bool IsDeleted { get; private set; }
-
+        public void UpdateLastLoginDate() => LastLogin = DateTime.Now;
         public void SetEntityAsDeleted() => IsDeleted = true;
         public void CryptographyPassword(string password) => Password = password;
     }

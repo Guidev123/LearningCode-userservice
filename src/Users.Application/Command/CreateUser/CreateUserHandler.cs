@@ -20,16 +20,21 @@ namespace Users.Application.Command.CreateUser
             var user = request.MapToEntity();
             var validationResult = new UserValidation().Validate(user);
 
+            if (!user.Document.Validate())
+                return new Response<GetUserDTO?>(null, 400, ResponseMessages.INVALID_DOCUMENT.GetDescription());
+
             if (!validationResult.IsValid)
                 return new Response<GetUserDTO?>(null, 400, ResponseMessages.USER_CREATION_FAILED.GetDescription());
 
             if (await _userRepository.UserAlreadyExists(user))
-                return new Response<GetUserDTO?>(null, 400, "Error: User already exists");
+                return new Response<GetUserDTO?>(null, 400, ResponseMessages.USER_ALREADY_EXISTS.GetDescription());
 
             user.CryptographyPassword(_authenticationService.ComputeSha256Hash(user.Password));
             _userRepository.CreateUserAsync(user);
 
-            var result = GetUserDTO.MapFromEntity(user);
+            var token = _authenticationService.GenerateJwtToken(user);
+
+            var result = GetUserDTO.MapFromEntity(user, token);
 
             return new Response<GetUserDTO?>(result, 201, ResponseMessages.USER_CREATED_SUCCESS.GetDescription());
         }

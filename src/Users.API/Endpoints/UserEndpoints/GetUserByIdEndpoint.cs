@@ -15,7 +15,9 @@ namespace Users.API.Endpoints.UserEndpoints
         {
             var result = await mediator.Send(new GetUserByIdQuery(id));
 
-            return result.IsSuccess ? TypedResults.Ok(result) : TypedResults.BadRequest(result);
+            return result.IsSuccess 
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest(result);
         }
     }
 }

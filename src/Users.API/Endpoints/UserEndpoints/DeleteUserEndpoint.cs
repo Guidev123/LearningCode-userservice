@@ -12,16 +12,14 @@ namespace Users.API.Endpoints.UserEndpoints
             app.MapDelete("/{id}", HandleAsync).Produces<Response<User?>>().RequireAuthorization();
 
         public static async Task<IResult> HandleAsync(IMediator mediator,
-                                                      IUnitOfWork unitOfWork,
+                                                      IUnitOfWork uow,
                                                       Guid id)
         {
             var result = await mediator.Send(new DeleteUserCommand(id));
 
-            if (await unitOfWork.Commit() && result.IsSuccess)
-                return TypedResults.Ok(result.Message);
-
-            return TypedResults.BadRequest(result.Message);
-
+            return result.IsSuccess && await uow.Commit()
+                ? TypedResults.Ok(result)
+                : TypedResults.BadRequest(result);
         }
     }
 }
