@@ -14,6 +14,8 @@ namespace Users.Application.Responses.Messages
         USER_CREATED_SUCCESS,
         [Description("Error: The document credentials is invalid.")]
         INVALID_DOCUMENT,
+        [Description("You typed your document incorrectly.")]
+        ERROR_DOCUMENT_FORMAT,
         [Description("Error: Unable to create user.")]
         USER_CREATION_FAILED,
         [Description("Error: User already exists.")]

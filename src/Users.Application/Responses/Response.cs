@@ -13,13 +13,17 @@ namespace Users.Application.Responses
         public Response(
             TData? data,
             int code = 200,
-            string? message = null)
+            string? message = null,
+            List<string>? validationErrors = null)
         {
             Data = data;
             Message = message;
             _code = code;
+            ValidationErrors = validationErrors;
         }
 
+        [JsonPropertyName("Errors")]
+        public List<string>? ValidationErrors { get; set; }
         public TData? Data { get; set; }
         public string? Message { get; set; }
 

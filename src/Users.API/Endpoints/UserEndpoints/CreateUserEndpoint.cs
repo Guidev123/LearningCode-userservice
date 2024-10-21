@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using Users.Application.Command.CreateUser;
 using Users.Application.Responses;
 using Users.Domain.Entities;

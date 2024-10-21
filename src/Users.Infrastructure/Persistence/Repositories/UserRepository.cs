@@ -12,15 +12,10 @@ namespace Users.Infrastructure.Persistence.Repositories
 
         public void UpdateUser(User user) => _context.Users.Update(user);
 
-        public async Task<bool> UserAlreadyExists(User user)
-        {
-            if (await _context.Users.AsNoTracking().CountAsync(x => x.Email.Address == user.Email.Address) > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        public async Task<bool> UserAlreadyExists(User user) =>
+             await _context.Users.AsNoTracking().AnyAsync(x => x.Email.Address == user.Email.Address
+                                                                        || x.Document.Number == user.Document.Number 
+                                                                        || x.Phone == user.Phone);
 
         public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string passwordHash) =>
             await _context.Users.SingleOrDefaultAsync(x => x.Email.Address == email && x.Password == passwordHash);

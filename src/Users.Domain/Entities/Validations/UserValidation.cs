@@ -12,25 +12,30 @@ namespace Users.Domain.Entities.Validations
         public UserValidation()
         {
             RuleFor(f => f.FullName)
-                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
+                .NotEmpty().WithMessage("The {PropertyName} field must be provided.")
                 .Length(2, 100)
-                .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+                .WithMessage("The {PropertyName} field must be between {MinLength} and {MaxLength} characters.");
 
             RuleFor(x => x.Password)
-               .NotEmpty().WithMessage("A senha é obrigatória.")
-               .MinimumLength(8).WithMessage("A senha deve ter no mínimo 8 caracteres.")
-               .Matches(@"[A-Z]").WithMessage("A senha deve conter pelo menos uma letra maiúscula.")
-               .Matches(@"[a-z]").WithMessage("A senha deve conter pelo menos uma letra minúscula.")
-               .Matches(@"\d").WithMessage("A senha deve conter pelo menos um dígito.")
-               .Matches(@"[\W_]").WithMessage("A senha deve conter pelo menos um caractere especial.");
+               .NotEmpty().WithMessage("The password is required.")
+               .MinimumLength(8).WithMessage("The password must be at least 8 characters long.")
+               .Matches(@"[A-Z]").WithMessage("The password must contain at least one uppercase letter.")
+               .Matches(@"[a-z]").WithMessage("The password must contain at least one lowercase letter.")
+               .Matches(@"\d").WithMessage("The password must contain at least one digit.")
+               .Matches(@"[\W_]").WithMessage("The password must contain at least one special character.");
 
             RuleFor(x => x.Email.Address)
-                .NotEmpty().WithMessage("O e-mail é obrigatório.")
-                .EmailAddress().WithMessage("É necessário um endereço de e-mail válido.");
+                .NotEmpty().WithMessage("The email is required.")
+                .EmailAddress().WithMessage("A valid email address is required.");
 
             RuleFor(f => f.Document.Number.Length)
                 .Equal(11)
-                .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
+                .WithMessage("The Document field must have {ComparisonValue} characters, but {PropertyValue} was provided.");
+
+            RuleFor(x => x.Phone)
+                .NotEmpty().WithMessage("The phone number is required.")
+                .Matches(@"^\+?[1-9]\d{1,14}$").WithMessage("A valid phone number must be provided.");
+
         }
     }
 }
