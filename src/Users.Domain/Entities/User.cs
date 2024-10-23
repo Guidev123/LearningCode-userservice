@@ -38,6 +38,7 @@ namespace Users.Domain.Entities
         public bool IsDeleted { get; private set; }
         public void UpdateLastLoginDate() => LastLogin = DateTime.Now;
         public void SetEntityAsDeleted() => IsDeleted = true;
+        public void SetUserAsPremium() => UserType = ECustomerType.Premium;
         public void CryptographyPassword(string password) => Password = password;
     }
 }

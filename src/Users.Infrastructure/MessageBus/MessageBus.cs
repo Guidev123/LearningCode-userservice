@@ -34,15 +34,10 @@ namespace Users.Infrastructure.MessageBus
                 .Or<BrokerUnreachableException>()
                 .WaitAndRetry(3, retry => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 
-            policy.Execute(() =>
-            {
-                _bus = RabbitHutch.CreateBus(_settings, register =>
-                {
-                    register.EnableNewtonsoftJson();
-                });
+            policy.Execute(() => {
+                _bus = RabbitHutch.CreateBus(_settings);
                 _advancedBus = _bus.Advanced;
                 _advancedBus.Disconnected += OnDisconnect;
-                _bus = RabbitHutch.CreateBus(_settings);
             });
         }
 
