@@ -1,4 +1,4 @@
-﻿namespace Users.Infrastructure.Messages
+﻿namespace Users.Infrastructure.MessageBus.Messages
 {
     public class Event : Message
     {

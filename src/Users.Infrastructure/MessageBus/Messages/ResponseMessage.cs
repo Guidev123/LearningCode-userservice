@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Users.Application.Responses;
 
-namespace Users.Infrastructure.Messages
+namespace Users.Infrastructure.MessageBus.Messages
 {
     public class ResponseMessage<TData>
     {

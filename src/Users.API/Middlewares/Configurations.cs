@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
 using Users.Application.Authentication;
 using Users.Application.Command.CreateUser;
 using Users.Domain.Repositories;
 using Users.Infrastructure.Authentication;
-using Users.Infrastructure.ExternalServices.Messages;
-using Users.Infrastructure.Messages;
+using Users.Infrastructure.MessageBus.Integration;
 using Users.Infrastructure.Persistence;
 using Users.Infrastructure.Persistence.Repositories;
 
@@ -16,12 +14,15 @@ namespace Users.API.Middlewares
 {
     public static class Configurations
     {
+        public const string BUS_SETTINGS = "BusSettings";
+
         public static void AddCustomMiddlewares(this WebApplicationBuilder builder)
         {
             builder.RegisterServicesDependencies();
             builder.SwaggerDocumentation();
             builder.DbContextConfiguration();
             builder.SecurityMiddleware();
+            builder.Services.AddMessageBusConfiguration(builder.Configuration);
         }
 
         public static void RegisterServicesDependencies(this WebApplicationBuilder builder)
@@ -38,7 +39,6 @@ namespace Users.API.Middlewares
             builder.Services.AddMediatR(config =>
                 config.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
 
-            builder.Services.Configure<BusSettings>(builder.Configuration.GetSection(nameof(BusSettings)));
         }
 
         public static void DbContextConfiguration(this WebApplicationBuilder builder)

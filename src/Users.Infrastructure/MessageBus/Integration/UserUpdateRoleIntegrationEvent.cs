@@ -1,4 +1,4 @@
-﻿namespace Users.Infrastructure.ExternalServices.Integration
+﻿namespace Users.Infrastructure.MessageBus.Integration
 {
     public class UserUpdateRoleIntegrationEvent(bool orderIsPaid, Guid userId) : IntegrationEvent
     {
