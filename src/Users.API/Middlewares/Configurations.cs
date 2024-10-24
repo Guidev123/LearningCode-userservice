@@ -7,6 +7,7 @@ using Users.Application.Command.CreateUser;
 using Users.Domain.Repositories;
 using Users.Infrastructure.Authentication;
 using Users.Infrastructure.MessageBus;
+using Users.Infrastructure.MessageBus.Configuration;
 using Users.Infrastructure.Persistence;
 using Users.Infrastructure.Persistence.Repositories;
 
@@ -29,14 +30,10 @@ namespace Users.API.Middlewares
         {
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
             builder.Services.Configure<SecurityKey>(builder.Configuration.GetSection(nameof(SecurityKey)));
-
-            builder.Services.AddMediatR(config =>
-                config.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
-
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
+            builder.Services.Configure<BusSettingsConfiguration>(builder.Configuration.GetSection(nameof(BusSettingsConfiguration)));
         }
 
         public static void AddSubscribers(this WebApplicationBuilder builder)
