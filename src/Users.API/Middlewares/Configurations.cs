@@ -38,7 +38,7 @@ namespace Users.API.Middlewares
 
         public static void AddSubscribers(this WebApplicationBuilder builder)
         {
-            builder.Services.AddHostedService<UpdateUserRole>();
+            builder.Services.AddHostedService<UpdateUserRoleService>();
         }
 
         public static void DbContextConfiguration(this WebApplicationBuilder builder)

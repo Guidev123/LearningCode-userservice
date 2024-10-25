@@ -12,9 +12,10 @@ namespace Users.API.Endpoints.UserEndpoints
     public class RefreshTokenEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app) =>
-            app.MapPost("/refresh", HandleAsync).Produces<Response<GetUserTokensDTO?>>();
+            app.MapPost("/refresh-token", HandleAsync).Produces<Response<string?>> ();
 
         public static async Task<IResult> HandleAsync(IMediator mediator,
+                                                      IUnitOfWork uow,
                                                       ClaimsPrincipal user,
                                                       RefreshTokenUserCommand command)
         {
@@ -22,8 +23,7 @@ namespace Users.API.Endpoints.UserEndpoints
             var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var result = await mediator.Send(new RefreshTokenUserCommand(command.Token, command.RefreshToken,
                                                                          userName!, Guid.Parse(userIdClaim!.Value)));
-
-            return result.IsSuccess
+            return result.IsSuccess && await uow.Commit()
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest(result);
         }

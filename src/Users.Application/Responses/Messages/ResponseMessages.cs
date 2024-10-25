@@ -12,6 +12,8 @@ namespace Users.Application.Responses.Messages
     {
         [Description("Success: User has been created successfully.")]
         USER_CREATED_SUCCESS,
+        [Description("Success: Token has refreshed successfully.")]
+        REFRESH_TOKEN_GENERATED,
         [Description("Error: The document credentials is invalid.")]
         INVALID_DOCUMENT,
         [Description("You typed your document incorrectly.")]

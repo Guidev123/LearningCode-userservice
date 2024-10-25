@@ -14,6 +14,7 @@ namespace Users.API.Endpoints
                 .MapEndpoint<CreateUserEndpoint>()
                 .MapEndpoint<DeleteUserEndpoint>()
                 .MapEndpoint<GetUserByIdEndpoint>()
+                .MapEndpoint<RefreshTokenEndpoint>()
                 .MapEndpoint<LoginUserEndpoint>();
 
         }

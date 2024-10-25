@@ -10,7 +10,7 @@ using Users.Domain.Entities;
 
 namespace Users.Application.Command.UpdateRoleUser
 {
-    public class UpdateRoleUserCommand(Guid userId) : IRequest<Response<GetUserDTO>>
+    public class UpdateRoleUserCommand(Guid userId) : IRequest<Response<string?>>
     {
         public Guid UserId { get; private set; } = userId;
     }

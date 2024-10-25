@@ -13,19 +13,20 @@ using System.Threading.Tasks;
 using Users.Application.Command.UpdateRoleUser;
 using Users.Application.DTOs;
 using Users.Application.Responses;
+using Users.Domain.Repositories;
 using Users.Infrastructure.MessageBus.Configuration;
 using Users.Infrastructure.MessageBus.Messages;
 
 namespace Users.Infrastructure.MessageBus
 {
-    public class UpdateUserRole : BackgroundService
+    public class UpdateUserRoleService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly BusSettingsConfiguration _busSettings;
 
-        public UpdateUserRole(IServiceProvider serviceProvider, IOptions<BusSettingsConfiguration> busSettings)
+        public UpdateUserRoleService(IServiceProvider serviceProvider, IOptions<BusSettingsConfiguration> busSettings)
         {
             _busSettings = busSettings.Value;
             _serviceProvider = serviceProvider;
@@ -51,11 +52,7 @@ namespace Users.Infrastructure.MessageBus
                 var contentString = Encoding.UTF8.GetString(byteArray);
                 var message = JsonConvert.DeserializeObject<UpdateUserRoleMessage>(contentString);
 
-                if (message is null)
-                    throw new Exception();
-
-                var result = await UpdateRole(message);
-
+                var result = await UpdateRole(message!);
                 if(result.IsSuccess) 
                     _channel.BasicAck(eventArgs.DeliveryTag, false);
             };
@@ -65,15 +62,19 @@ namespace Users.Infrastructure.MessageBus
             return Task.CompletedTask;
         }
 
-        private async Task<Response<GetUserDTO>> UpdateRole(UpdateUserRoleMessage message)
+        private async Task<Response<string?>> UpdateRole(UpdateUserRoleMessage message)
         {
-            var clientCommand = new UpdateRoleUserCommand(message.UserId);
-            Response<GetUserDTO> sucess;
+            var clientCommand = new UpdateRoleUserCommand(message!.UserId);
+            Response<string?> sucess;
 
             using (var scope = _serviceProvider.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
                 sucess = await mediator.Send(clientCommand);
+
+                if(sucess.IsSuccess) await unitOfWork.Commit();
             }
             return sucess;
         }

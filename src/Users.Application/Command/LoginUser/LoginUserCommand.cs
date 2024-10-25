@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Users.Application.DTOs;
 using Users.Application.Responses;
 using Users.Domain.Entities;
 
 namespace Users.Application.Command.LoginUser
 {
-    public class LoginUserCommand : IRequest<Response<string?>>
+    public class LoginUserCommand : IRequest<Response<GetUserTokensDTO?>>
     {
         public LoginUserCommand(string email, string password)
         {

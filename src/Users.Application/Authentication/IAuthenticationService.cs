@@ -1,4 +1,5 @@
-﻿using Users.Domain.Entities;
+﻿using System.Security.Claims;
+using Users.Domain.Entities;
 
 namespace Users.Application.Authentication
 {
@@ -6,5 +7,6 @@ namespace Users.Application.Authentication
     {
         string GenerateJwtToken(User user);
         string ComputeSha256Hash(string password);
+        string GenerateRefreshToken();
     }
 }
