@@ -25,7 +25,6 @@ namespace Users.Application.Command.RefreshTokenUser
 
             var newJwt = _authenticationService.GenerateJwtToken(user);
             var newRefreshToken = _authenticationService.GenerateRefreshToken();
-            user.UpdateLastLoginDate(); 
 
             return new Response<GetUserTokensDTO?>(new(newJwt, newRefreshToken), 200, ResponseMessages.REFRESH_TOKEN_GENERATED.GetDescription());
         }

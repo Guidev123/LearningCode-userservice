@@ -15,7 +15,6 @@ namespace Users.API.Endpoints.UserEndpoints
             app.MapPost("/refresh-token", HandleAsync).Produces<Response<string?>> ();
 
         public static async Task<IResult> HandleAsync(IMediator mediator,
-                                                      IUnitOfWork uow,
                                                       ClaimsPrincipal user,
                                                       RefreshTokenUserCommand command)
         {
@@ -23,7 +22,7 @@ namespace Users.API.Endpoints.UserEndpoints
             var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var result = await mediator.Send(new RefreshTokenUserCommand(command.Token, command.RefreshToken,
                                                                          userName!, Guid.Parse(userIdClaim!.Value)));
-            return result.IsSuccess && await uow.Commit()
+            return result.IsSuccess
                 ? TypedResults.Ok(result)
                 : TypedResults.BadRequest(result);
         }
