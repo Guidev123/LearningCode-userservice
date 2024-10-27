@@ -28,7 +28,6 @@ namespace Users.Application.Command.LoginUser
             string jwt = _authenticationService.GenerateJwtToken(user);
             string refreshToken = _authenticationService.GenerateRefreshToken();
 
-            _authenticationService.SaveRefreshToken(request.Email, refreshToken);
             user.UpdateLastLoginDate();
 
             return new Response<GetUserTokensDTO?>(new(jwt, refreshToken), 200, ResponseMessages.LOGIN_SUCCESS.GetDescription());
