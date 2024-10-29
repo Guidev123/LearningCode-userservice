@@ -7,7 +7,7 @@ namespace Users.Application.Responses
         private readonly int _code;
 
         [JsonConstructor]
-        public Response(Response<DTOs.GetUserDTO> response)
+        public Response()
             => _code = 200;
 
         public Response(
