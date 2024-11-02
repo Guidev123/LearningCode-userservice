@@ -3,6 +3,7 @@
 
  <p>This API is part of the <strong>Learning Code</strong> microservice, an e-learning software. It is responsible for user authentication in the system, including user creation, login, generation and renewal of <em>JWT</em> and <em>Refresh Tokens</em>, deletion and querying of users by <code>Id</code>, as well as receiving messages via <strong>RabbitMQ</strong> for updating a user's <code>Role</code>.</p>
 
+
  <h2>Security 👮</h2>
     <p>Security was a top priority in the development of this API. We implemented best security practices to protect user data, including:</p>
     <ul>
