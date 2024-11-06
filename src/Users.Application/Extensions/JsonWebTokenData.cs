@@ -1,4 +1,4 @@
-﻿namespace Users.Infrastructure.Authentication
+﻿namespace Users.Application.Extensions
 {
     public class JsonWebTokenData
     {

@@ -4,10 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Users.Application.Authentication;
+using Users.Application.Extensions;
 using Users.Domain.Entities;
 
-namespace Users.Infrastructure.Authentication
+namespace Users.Application.Authentication
 {
     public class AuthenticationService(IOptions<JsonWebTokenData> jwt) : IAuthenticationService
     {

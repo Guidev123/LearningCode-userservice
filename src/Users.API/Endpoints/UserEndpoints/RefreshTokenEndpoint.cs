@@ -1,11 +1,7 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using System.Security.Claims;
-using Users.Application.Command.LoginUser;
 using Users.Application.Command.RefreshTokenUser;
-using Users.Application.DTOs;
 using Users.Application.Responses;
-using Users.Domain.Repositories;
 
 namespace Users.API.Endpoints.UserEndpoints
 {

@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Users.Application.Authentication;
+using Users.Application.BackgroundServices;
 using Users.Application.Command.CreateUser;
+using Users.Application.Extensions;
 using Users.Domain.Repositories;
-using Users.Infrastructure.Authentication;
 using Users.Infrastructure.MessageBus;
 using Users.Infrastructure.MessageBus.Configuration;
 using Users.Infrastructure.Persistence;
@@ -53,7 +54,7 @@ namespace Users.API.Middlewares
             builder.Services.Configure<JsonWebTokenData>(jwtDataSection);
 
             var jwt = jwtDataSection.Get<JsonWebTokenData>();
-            var key = Encoding.ASCII.GetBytes(jwtDataSection.Key);
+            var key = Encoding.UTF8.GetBytes(jwtDataSection.Key);
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

@@ -5,19 +5,14 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Users.Application.Command.UpdateRoleUser;
-using Users.Application.DTOs;
 using Users.Application.Responses;
 using Users.Domain.Repositories;
 using Users.Infrastructure.MessageBus.Configuration;
 using Users.Infrastructure.MessageBus.Messages;
 
-namespace Users.Infrastructure.MessageBus
+namespace Users.Application.BackgroundServices
 {
     public class UpdateUserRoleService : BackgroundService
     {
@@ -53,7 +48,7 @@ namespace Users.Infrastructure.MessageBus
                 var message = JsonConvert.DeserializeObject<UpdateUserRoleMessage>(contentString);
 
                 var result = await UpdateRole(message!);
-                if(result.IsSuccess) 
+                if (result.IsSuccess)
                     _channel.BasicAck(eventArgs.DeliveryTag, false);
             };
 
@@ -74,7 +69,7 @@ namespace Users.Infrastructure.MessageBus
 
                 sucess = await mediator.Send(clientCommand);
 
-                if(sucess.IsSuccess) await unitOfWork.Commit();
+                if (sucess.IsSuccess) await unitOfWork.Commit();
             }
             return sucess;
         }
