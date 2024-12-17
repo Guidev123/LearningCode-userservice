@@ -7,10 +7,10 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using Users.Application.Command.UpdateRoleUser;
+using Users.Application.MessageBus.Configuration;
+using Users.Application.MessageBus.Messages;
 using Users.Application.Responses;
 using Users.Domain.Repositories;
-using Users.Infrastructure.MessageBus.Configuration;
-using Users.Infrastructure.MessageBus.Messages;
 
 namespace Users.Application.BackgroundServices
 {

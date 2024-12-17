@@ -6,9 +6,8 @@ using Users.Application.Authentication;
 using Users.Application.BackgroundServices;
 using Users.Application.Command.CreateUser;
 using Users.Application.Extensions;
+using Users.Application.MessageBus.Configuration;
 using Users.Domain.Repositories;
-using Users.Infrastructure.MessageBus;
-using Users.Infrastructure.MessageBus.Configuration;
 using Users.Infrastructure.Persistence;
 using Users.Infrastructure.Persistence.Repositories;
 

@@ -1,4 +1,4 @@
-﻿namespace Users.Infrastructure.MessageBus.Messages
+﻿namespace Users.Application.MessageBus.Messages
 {
     public class UpdateUserRoleMessage
     {
