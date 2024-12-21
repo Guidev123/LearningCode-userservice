@@ -1,10 +1,10 @@
+using Users.API.Configurations;
 using Users.API.Endpoints;
-using Users.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.AddCustomMiddlewares();
+builder.AddConfigurations();
 
 var app = builder.Build();
 

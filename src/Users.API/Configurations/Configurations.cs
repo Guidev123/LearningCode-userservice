@@ -11,13 +11,13 @@ using Users.Domain.Repositories;
 using Users.Infrastructure.Persistence;
 using Users.Infrastructure.Persistence.Repositories;
 
-namespace Users.API.Middlewares
+namespace Users.API.Configurations
 {
     public static class Configurations
     {
         public const string BUS_SETTINGS = "BusSettings";
 
-        public static void AddCustomMiddlewares(this WebApplicationBuilder builder)
+        public static void AddConfigurations(this WebApplicationBuilder builder)
         {
             builder.RegisterServicesDependencies();
             builder.SwaggerDocumentation();

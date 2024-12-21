@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Users.API.Middlewares
+namespace Users.API.Configurations
 {
     public class SecurityConfiguration(IOptions<SecurityKey> options, RequestDelegate next)
     {

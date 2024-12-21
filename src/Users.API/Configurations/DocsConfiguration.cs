@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace Users.API.Middlewares
+namespace Users.API.Configurations
 {
     public static class DocsConfiguration
     {
