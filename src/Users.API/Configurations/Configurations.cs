@@ -28,8 +28,8 @@ namespace Users.API.Configurations
 
         public static void RegisterServicesDependencies(this WebApplicationBuilder builder)
         {
-            builder.Services.AddTransient<IUserRepository, UserRepository>();
-            builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.Configure<SecurityKey>(builder.Configuration.GetSection(nameof(SecurityKey)));
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<CreateUserCommand>());
